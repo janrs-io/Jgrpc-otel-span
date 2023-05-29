@@ -16,8 +16,8 @@ type OtelSpan struct {
 	tracer *sdktrace.TracerProvider
 }
 
-// NewOtelSpan 实例化 OtelSpan
-func NewOtelSpan(tracer *sdktrace.TracerProvider) *OtelSpan {
+// New 实例化 OtelSpan
+func New(tracer *sdktrace.TracerProvider) *OtelSpan {
 	return &OtelSpan{
 		tracer: tracer,
 	}
