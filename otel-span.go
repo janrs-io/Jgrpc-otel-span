@@ -33,11 +33,13 @@ func (s *OtelSpan) Record(ctx context.Context, tracerName string) (context.Conte
 // Error 记录链路错误
 // 包含 文件名以及完整路径/错误行数
 func (s *OtelSpan) Error(span trace.Span, msg string) error {
-	_, file, line, _ := runtime.Caller(1)
+	_, file, line, ok := runtime.Caller(1)
 	span.SetStatus(otelcodes.Error, msg)
-	span.SetAttributes(
-		attribute.String("file.name", file),
-		attribute.Int("file.line", line),
-	)
-	return errors.New("msg")
+	if ok {
+		span.SetAttributes(
+			attribute.String("file.name", file),
+			attribute.Int("file.line", line),
+		)
+	}
+	return errors.New(msg)
 }
